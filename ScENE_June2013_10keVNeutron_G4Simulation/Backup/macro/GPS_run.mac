@@ -1,0 +1,53 @@
+# ----------------
+# Verbose settings
+# ----------------
+/control/verbose 2
+/run/verbose 2
+#/tracking/verbose 2
+
+# HepRepFile diriver
+/vis/open HepRepFile
+
+# OpenGL drivers
+#/vis/open OGLIX
+#/vis/open OGLIXm
+
+# Add world volume
+/vis/drawVolume
+
+# Visualise geometry
+/vis/viewer/flush
+
+# Set camera angle for OGLIXm driver
+/vis/viewer/set/viewpointThetaPhi 70 60
+/vis/viewer/set/hiddenEdge true
+
+# Add trajectories to the visualization.
+/vis/scene/add/trajectories
+
+# HandsOn4: add hits to scene
+/vis/scene/add/hits
+
+# Accumulate multiple events in one picture.
+/vis/scene/endOfEventAction accumulate
+
+# Trajectory colouring scheme
+/vis/modeling/trajectories/create/drawByCharge
+/vis/modeling/trajectories/drawByCharge-0/set -1 blue
+/vis/modeling/trajectories/drawByCharge-0/set 1 green
+/vis/modeling/trajectories/drawByCharge-0/set 0 red
+
+#HandsOn4: change primary particle energy
+/gps/particle pi0
+/gps/pos/type Plane
+/gps/pos/shape Square
+/gps/pos/centre 0 0 0 cm
+/gps/pos/halfx  25 m
+/gps/pos/halfy  10 m
+#/gps/ang/type cos  default isotropical
+/gps/ene/mono 400 MeV
+
+/run/beamOn 10
+
+
+

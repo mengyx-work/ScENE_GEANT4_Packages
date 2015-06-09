@@ -1,0 +1,64 @@
+# ----------------
+# Verbose settings
+# ----------------
+/control/verbose 0
+/run/verbose 0
+#/tracking/verbose 0
+
+# HepRepFile diriver
+/vis/open HepRepFile
+
+# OpenGL drivers
+#/vis/open OGLIX
+#/vis/open OGLIXm
+
+# Add world volume
+/vis/drawVolume
+
+# Visualise geometry
+/vis/viewer/flush
+
+# Set camera angle for OGLIXm driver
+/vis/viewer/set/viewpointThetaPhi 70 60
+/vis/viewer/set/hiddenEdge true
+
+# Try the Visualization Method
+#vis/viewer/set/style wireframe
+#vis/viewer/set/style surface
+
+# Add trajectories to the visualization.
+/vis/scene/add/trajectories
+
+# HandsOn4: add hits to scene
+/vis/scene/add/hits
+
+# Accumulate multiple events in one picture.
+#/vis/scene/endOfEventAction accumulate
+
+# Trajectory colouring scheme
+/vis/modeling/trajectories/create/drawByCharge
+/vis/modeling/trajectories/drawByCharge-0/set -1 white
+/vis/modeling/trajectories/drawByCharge-0/set 1 green
+/vis/modeling/trajectories/drawByCharge-0/set 0 blue
+
+# Using the trajectory model and filter
+# Based on the charged type to discriminate them
+#To select neutral tracks only
+/vis/filtering/trajectories/create/chargeFilter
+/vis/filtering/trajectories/chargeFilter-0/add -1
+
+#To select charged tracks only
+#/vis/filtering/trajectories/chargeFilter-0/invert
+
+
+
+
+#HandsOn4: change primary particle energy
+/gun/particle e-
+/gun/energy 500 MeV
+/gun/position 0 0 0 m
+/gun/direction -1 0 0
+/run/beamOn 1
+
+
+

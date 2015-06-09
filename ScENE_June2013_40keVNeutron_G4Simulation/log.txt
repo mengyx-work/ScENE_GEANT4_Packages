@@ -1,0 +1,6 @@
+Nov. 28th
+
+SCENE no-site detector configuration
+#1. the distance between LiF and TPC center: 58 cm
+#2. the distance between TPC center and EJ301 CENTER: 58 cm
+#3. The beam is facing the PE collimator

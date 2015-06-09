@@ -1,0 +1,77 @@
+####################################
+# G4Tutorial: Example macro file   #
+#             Visualization (OGL)  #
+#             Electron beam        #
+####################################
+#
+#
+####################
+# VERBOSITY LEVELS #
+####################
+#
+/control/verbose 1
+/tracking/verbose 0
+/run/verbose 0
+/event/verbose 0
+#
+#
+################# 
+# VISUALIZATION #
+#################
+#
+/vis/scene/create
+/vis/open OGLIX
+/vis/viewer/flush
+/vis/viewer/set/viewpointThetaPhi 120 20
+#
+#
+# Many other options available with /vis/modeling and /vis/filtering.
+/vis/modeling/trajectories/create/drawByParticleID
+/vis/modeling/trajectories/drawByParticleID-0/set e- red
+/vis/modeling/trajectories/drawByParticleID-0/set gamma green
+/vis/scene/endOfEventAction accumulate
+#
+#
+###########
+# PHYSICS #
+###########
+#
+/physics/physConstructor EM-Photon-Penelope
+/physics/physConstructor EM-Electron-Penelope
+/physics/physConstructor EM-Positron-Standard
+#
+/physics/prodThreshold   0.001 mm
+#
+# 
+######################
+# RUN INITIALIZATION #
+######################
+#
+/run/initialize
+/tracking/storeTrajectory 1
+#
+#
+######################## 
+# DETECTOR DESCRIPTION #
+########################
+#
+/detector/maxStepSize    0.01 mm
+/detector/colour         yellow
+#
+#
+###################### 
+# SOURCE DESCRIPTION #
+######################
+#
+/source/primParticle   e-
+/source/primEnergy     2.000 MeV
+/source/sigmaEnergy    0 keV
+/source/incidentAngle  0.0 deg
+#
+#
+#############
+# START RUN #
+#############
+#
+/run/beamOn 1000
+

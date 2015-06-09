@@ -1,0 +1,107 @@
+  
+
+EJs Position:
+
+    //--------------------------------------------------------------------------------------------   
+     
+    
+     //--- for 5"DIA x 5" Chamber of Scintillator, neutron detector ---
+    
+     const G4double                EJ_Radius = 2.54*2.5*cm;
+     const G4double            EJ_halfHeight = 2.54*2.5*cm;
+    const G4double   TPC_Center_zAxis_Offset = -1.5*2.5*cm; //----- TPC center is the liquid center -------
+    
+    
+    
+    
+    
+    G4Tubs*                         EJ_tube = new G4Tubs("EJ_tube", 0.*cm, EJ_Radius, EJ_halfHeight, 0.*deg, 360.*deg);
+    
+    G4LogicalVolume*        EJ_tube_Logical = new G4LogicalVolume(EJ_tube, EJ301, "EJ_tube_Logical");
+    
+    
+    EJ_tube_Logical->SetVisAttributes(G4Colour::Red());
+
+    
+    G4RotationMatrix R_EJ1, R_EJ2, R_EJ3;
+    G4ThreeVector    T_EJ1, T_EJ2, T_EJ3;
+    
+    
+    const double            PiValue = 3.1415926;
+    
+    const double        TopEJ_xyPlane_Angle = 24.72;
+    
+    const double       SideEJ_Theta_Angle = 16.0727; 
+    const double       SideEJ_Alpha_Angle = 53.486;
+    
+ 
+    R_EJ1.rotateX((90-24.72)*deg);
+    R_EJ1.rotateZ(89.9*deg);
+
+
+    R_EJ2.rotateX((SideEJ_Theta_Angle-90)*deg);
+    R_EJ3.rotateX((90-SideEJ_Theta_Angle)*deg);
+
+    R_EJ2.rotateZ(( SideEJ_Alpha_Angle)*deg);
+    R_EJ3.rotateZ((-90+SideEJ_Alpha_Angle)*deg);
+
+    
+
+    
+     const G4double       ProtonBeam_Line_zAxis_Pos = (31.36-1.5*2.54)*cm;
+    
+     const G4double       zAxis_TPC_Offset = -1.5*2.54*cm;
+    
+     const G4double       TPC_EJ_Distance = 71.12*cm;  //----(to the front end of EJs)----
+    
+    
+     const G4double       EJ1_xAxis_Pos = (TPC_EJ_Distance + EJ_halfHeight)*std::cos(TopEJ_xyPlane_Angle/180.*PiValue);
+     const G4double       EJ1_zAxis_Pos = (TPC_EJ_Distance + EJ_halfHeight)*std::sin(TopEJ_xyPlane_Angle/180.*PiValue) + TPC_Center_zAxis_Offset;
+    
+    const G4double       EJ2_xAxis_Pos =  (TPC_EJ_Distance + EJ_halfHeight)*std::cos(SideEJ_Theta_Angle/180.*PiValue)*std::cos(SideEJ_Alpha_Angle/180.*PiValue);
+    const G4double       EJ2_yAxis_Pos = -(TPC_EJ_Distance + EJ_halfHeight)*std::cos(SideEJ_Theta_Angle/180.*PiValue)*std::sin(SideEJ_Alpha_Angle/180.*PiValue);
+    const G4double       EJ2_zAxis_Pos = -(TPC_EJ_Distance + EJ_halfHeight)*std::sin(SideEJ_Theta_Angle/180.*PiValue) + TPC_Center_zAxis_Offset;
+    
+    const G4double       EJ3_xAxis_Pos =  (TPC_EJ_Distance + EJ_halfHeight)*std::cos(SideEJ_Theta_Angle/180.*PiValue)*std::cos(SideEJ_Alpha_Angle/180.*PiValue);
+    const G4double       EJ3_yAxis_Pos =  (TPC_EJ_Distance + EJ_halfHeight)*std::cos(SideEJ_Theta_Angle/180.*PiValue)*std::sin(SideEJ_Alpha_Angle/180.*PiValue);
+    const G4double       EJ3_zAxis_Pos = -(TPC_EJ_Distance + EJ_halfHeight)*std::sin(SideEJ_Theta_Angle/180.*PiValue) + TPC_Center_zAxis_Offset;
+
+    
+      T_EJ1.setX(EJ1_xAxis_Pos);
+      T_EJ1.setZ(EJ1_zAxis_Pos);
+  
+    
+    //T_EJ1->setX(EJ1_xAxis_Pos);
+    //T_EJ1->setZ(EJ1_zAxis_Pos);
+
+    
+    
+      T_EJ2.setX(EJ2_xAxis_Pos);
+      T_EJ2.setY(EJ2_yAxis_Pos);
+      T_EJ2.setZ(EJ2_zAxis_Pos);
+    
+      T_EJ3.setY(EJ3_yAxis_Pos);
+      T_EJ3.setX(EJ3_xAxis_Pos);
+      T_EJ3.setZ(EJ3_zAxis_Pos);
+    
+    
+     //new G4PVPlacement( R_EJ1, G4ThreeVector(EJ1_xAxis_Pos, 0, EJ1_zAxis_Pos),  EJ_tube_Logical, "EJ301_1", fpWorldLogical, true, 0);
+    
+    
+     new G4PVPlacement(G4Transform3D(R_EJ1, T_EJ1),  EJ_tube_Logical, "EJ301_1", fpWorldLogical, true, 1, true);
+     new G4PVPlacement(G4Transform3D(R_EJ2, T_EJ2),  EJ_tube_Logical, "EJ301_2", fpWorldLogical, true, 1, true);
+     new G4PVPlacement(G4Transform3D(R_EJ3, T_EJ3),  EJ_tube_Logical, "EJ301_3", fpWorldLogical, true, 1, true);
+    
+    
+    
+    //----------------------------------------------------------------------------------------------------------------------
+   
+
+
+The Position of Neutron Beam:
+
+
+    const      double     Neutron_xAxis_Position = -64.77*cm;  //---Notre Dame May 2013 setup 64.77 cm-----
+    const      double     Neutron_zAxis_Position = (31.36-1.5*2.54)*cm;
+    
+
